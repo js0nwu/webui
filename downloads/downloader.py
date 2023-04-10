@@ -30,7 +30,7 @@ MODEL_GDRIVE_URLS = {
         "screenrecognition-vins.ckpt": "https://drive.google.com/file/d/10Id643ldFjOeOtnY2cGCtKOEDGMp_BHV/view?usp=share_link",
         "screenrecognition-web7k-vins.ckpt": "https://drive.google.com/file/d/1M3uoxLKncwf0WHLbEhbCoOytDjQT2gU9/view?usp=share_link",
         "screenrecognition-web7k.ckpt": "https://drive.google.com/file/d/1DfIz1geicHYNq3_UdT10oSjLCDgkE72t/view?usp=share_link",
-        "screenrecognition-web7kbal-vins.ckpt": "", # need to find this checkpoint
+        "screenrecognition-web7kbal-vins.ckpt": "https://drive.google.com/file/d/10Gb77oBa7HmQwcR2vLVTdNdoUPagEPyy/view?usp=share_link",
         "screenrecognition-web7kbal.ckpt": "https://drive.google.com/file/d/1-0TrGpDaQMrDK2Wf8A-7pnrgHnJXmdiz/view?usp=share_link",
         "screenrecognition-web70k-vins.ckpt": "https://drive.google.com/file/d/1BsOa3e9T3_HM5rGPY70K9Z4FuBIrKqVs/view?usp=share_link",
         "screenrecognition-web70k.ckpt": "https://drive.google.com/file/d/1yeCFHIfLl7taSAoYYCuECwaCZmLToKlI/view?usp=share_link",
