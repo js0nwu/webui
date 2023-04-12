@@ -3,8 +3,25 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[[source]]
+url = "https://download.pytorch.org/whl/cu118"
+verify_ssl = true
+name = "downloadpytorch"
+
+[[source]]
+url = "https://download.pytorch.org/whl/cu118"
+verify_ssl = true
+name = "downloadpytorch"
+
 [packages]
+pandas = "*"
+tqdm = "*"
 gdown = "*"
+torch = {version = "*", index = "downloadpytorch"}
+torchvision = {version = "*", index = "downloadpytorch"}
+pytorch-lightning = "==1.9"
+scikit-learn = "*"
+tensorboard = "*"
 
 [dev-packages]
 

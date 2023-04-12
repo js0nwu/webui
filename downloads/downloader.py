@@ -3,6 +3,7 @@ import gdown
 import subprocess
 import glob
 import shutil
+import urllib.request
 
 DATASET_GDRIVE_URLS = {
     "webui-all": "https://drive.google.com/drive/folders/1IGOCYjwY5wp3ZNEhxyN5bLEEJ-8M8kHg?usp=share_link",
@@ -13,6 +14,10 @@ DATASET_GDRIVE_URLS = {
     "webui-70k": "https://drive.google.com/drive/folders/1_srKdxB9Gjl02p-cEpBQ7OO2Q65I9whG?usp=share_link",
     "webui-350k": "https://drive.google.com/drive/folders/1yCEHzeWx33t6DsFt889SRnFoqtl-vTgu?usp=share_link"
 }
+
+DATASET_RICO_URL = "https://storage.googleapis.com/crowdstf-rico-uiuc-4540/rico_dataset_v0.1/unique_uis.tar.gz"
+
+DATASET_ENRICO_URL = "http://userinterfaces.aalto.fi/enrico/resources/screenshots.zip"
 
 MODEL_GDRIVE_URLS = {
     "screenclassification": {
@@ -49,6 +54,43 @@ MODEL_GDRIVE_URLS = {
     }
 }
 
+def download_rico(tmp_path="tmp", dataset_path="rico"):
+    if not os.path.exists(tmp_path):
+        os.makedirs(tmp_path)
+
+    output_path = os.path.join(tmp_path, "unique_uis.tar.gz")
+    urllib.request.urlretrieve(DATASET_RICO_URL, output_path)
+
+    extract_path = os.path.join(tmp_path, "extract")
+
+    cmd = "7z x -tgzip -so {} | 7z x -si -ttar -o{}".format(output_path, extract_path)
+    sp = subprocess.Popen(cmd, stdin=subprocess.PIPE, shell=True)
+    sp.communicate()
+
+    if not os.path.exists(dataset_path):
+        os.makedirs(dataset_path)
+
+    os.rename(os.path.join(extract_path, "combined"), os.path.join(dataset_path, "combined"))
+    shutil.rmtree(tmp_path)
+
+def download_enrico(tmp_path="tmp", dataset_path="enrico"):
+    if not os.path.exists(tmp_path):
+        os.makedirs(tmp_path)
+
+    output_path = os.path.join(tmp_path, "screenshots.zip")
+    urllib.request.urlretrieve(DATASET_ENRICO_URL, output_path)
+
+    extract_path = os.path.join(tmp_path, "extract")
+    cmd = ['7z', 'x', output_path, '-o' + str(extract_path)]
+    sp = subprocess.Popen(cmd)
+    sp.communicate()
+
+    if not os.path.exists(dataset_path):
+        os.makedirs(dataset_path)
+
+    os.rename(os.path.join(extract_path, "screenshots"), os.path.join(dataset_path, "screenshots"))
+    shutil.rmtree(tmp_path)    
+
 def download_dataset_gdown(dataset_key, tmp_path="tmp", dataset_path="ds"):
     if not os.path.exists(tmp_path):
         os.makedirs(tmp_path)
@@ -76,7 +118,7 @@ def download_dataset_gdown(dataset_key, tmp_path="tmp", dataset_path="ds"):
     dataset_ids = glob.glob(extract_path + "/*/*")
 
     for folder in dataset_ids:
-        shutil.move(folder, os.path.join(dataset_path, os.path.basename(folder)))
+        os.rename(folder, os.path.join(dataset_path, os.path.basename(folder)))
     
     # delete the tmp path
     shutil.rmtree(tmp_path)
@@ -88,5 +130,6 @@ def download_model_gdown(model_name, model_key, model_path="checkpoints"):
     gdown.download(MODEL_GDRIVE_URLS[model_name][model_key], output=os.path.join(model_path, model_key), fuzzy=True)
 
 if __name__ == "__main__":
-    # download_dataset_gdown("webui-7k-balanced")
-    download_model_gdown("screenrecognition", "screenrecognition-web350k-vins.ckpt")
+#    download_model_gdown("screenclassification", "screenclassification-resnet-noisystudent+web350k.ckpt")
+#    download_enrico()
+    download_dataset_gdown("webui-7k")
