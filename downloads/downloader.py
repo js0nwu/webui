@@ -139,7 +139,8 @@ def download_dataset_gdown(dataset_key, tmp_path="tmp", dataset_path="ds"):
     dataset_ids = glob.glob(extract_path + "/*/*")
 
     for folder in dataset_ids:
-        os.rename(folder, os.path.join(dataset_path, os.path.basename(folder)))
+        if not os.path.exists(os.path.join(dataset_path, os.path.basename(folder)):
+            os.rename(folder, os.path.join(dataset_path, os.path.basename(folder)))
     
     # delete the tmp path
     shutil.rmtree(tmp_path)
@@ -152,6 +153,6 @@ def download_model_gdown(model_name, model_key, model_path="checkpoints"):
 
 if __name__ == "__main__":
 #    download_model_gdown("screenclassification", "screenclassification-resnet-noisystudent+web350k.ckpt")
-    download_enrico()
-#    download_dataset_gdown("webui-7k")
+#    download_enrico()
+    download_dataset_gdown("webui-7k-balanced")
 #    download_metadata_gdown("screenclassification")

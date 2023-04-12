@@ -25,7 +25,7 @@ if __name__ == "__main__":
     
     logger = TensorBoardLogger(ARTIFACT_DIR)
     
-    data = SilverDataModule(silver_id_list_path="../screenrecognition/train_split_web7k.json", K=700)
+    data = SilverDataModule(silver_id_list_path="../../downloads/train_split_web7k.json", K=700)
 
     model = UIScreenClassifier(num_classes=20, lr=0.00005, arch="resnet50_conv", dropout=0.5)
 
