@@ -15,6 +15,12 @@ DATASET_GDRIVE_URLS = {
     "webui-350k": "https://drive.google.com/drive/folders/1yCEHzeWx33t6DsFt889SRnFoqtl-vTgu?usp=share_link"
 }
 
+METADATA_GDRIVE_URLS = {
+    "screenclassification": "https://drive.google.com/drive/folders/17AHRTUQ99UbU6ugumFROpRQ-49BKtGat?usp=share_link",
+    "screenrecognition": "https://drive.google.com/drive/folders/1jOJF2nm5F98nCn3alSR3AZhOTjuYbvDA?usp=share_link",
+    "screensim": "https://drive.google.com/drive/folders/1mHyB7Y8tHhB5aNs-vMxaSV0ANPJmwegq?usp=share_link"
+}
+
 DATASET_RICO_URL = "https://storage.googleapis.com/crowdstf-rico-uiuc-4540/rico_dataset_v0.1/unique_uis.tar.gz"
 
 DATASET_ENRICO_URL = "http://userinterfaces.aalto.fi/enrico/resources/screenshots.zip"
@@ -91,6 +97,13 @@ def download_enrico(tmp_path="tmp", dataset_path="enrico"):
     os.rename(os.path.join(extract_path, "screenshots"), os.path.join(dataset_path, "screenshots"))
     shutil.rmtree(tmp_path)    
 
+def download_metadata_gdown(metadata_key, metadata_path="../metadata"):
+    if not os.path.exists(metadata_path):
+        os.makedirs(metadata_path)
+
+    gdown.download_folder(METADATA_GDRIVE_URLS[metadata_key], output=os.path.join(metadata_path, metadata_key))
+
+
 def download_dataset_gdown(dataset_key, tmp_path="tmp", dataset_path="ds"):
     if not os.path.exists(tmp_path):
         os.makedirs(tmp_path)
@@ -132,4 +145,5 @@ def download_model_gdown(model_name, model_key, model_path="checkpoints"):
 if __name__ == "__main__":
 #    download_model_gdown("screenclassification", "screenclassification-resnet-noisystudent+web350k.ckpt")
 #    download_enrico()
-    download_dataset_gdown("webui-7k")
+#    download_dataset_gdown("webui-7k")
+    download_metadata_gdown("screenclassification")
