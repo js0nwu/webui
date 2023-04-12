@@ -24,6 +24,7 @@ METADATA_GDRIVE_URLS = {
 DATASET_RICO_URL = "https://storage.googleapis.com/crowdstf-rico-uiuc-4540/rico_dataset_v0.1/unique_uis.tar.gz"
 
 DATASET_ENRICO_URL = "http://userinterfaces.aalto.fi/enrico/resources/screenshots.zip"
+METADATA_ENRICO_URL = "https://raw.githubusercontent.com/luileito/enrico/master/design_topics.csv"
 
 MODEL_GDRIVE_URLS = {
     "screenclassification": {
@@ -79,7 +80,7 @@ def download_rico(tmp_path="tmp", dataset_path="rico"):
     os.rename(os.path.join(extract_path, "combined"), os.path.join(dataset_path, "combined"))
     shutil.rmtree(tmp_path)
 
-def download_enrico(tmp_path="tmp", dataset_path="enrico"):
+def download_enrico(tmp_path="tmp", dataset_path="enrico", screenclassification_metadata_path="../metadata/screenclassification"):
     if not os.path.exists(tmp_path):
         os.makedirs(tmp_path)
 
@@ -96,6 +97,13 @@ def download_enrico(tmp_path="tmp", dataset_path="enrico"):
 
     os.rename(os.path.join(extract_path, "screenshots"), os.path.join(dataset_path, "screenshots"))
     shutil.rmtree(tmp_path)    
+
+    if not os.path.exists(screenclassification_metadata_path):
+        os.makedirs(screenclassification_metadata_path)
+
+    metadata_output_path = os.path.join(screenclassification_metadata_path, "design_topics.csv")
+    urllib.request.urlretrieve(METADATA_ENRICO_URL, metadata_output_path)
+
 
 def download_metadata_gdown(metadata_key, metadata_path="../metadata"):
     if not os.path.exists(metadata_path):
@@ -144,6 +152,6 @@ def download_model_gdown(model_name, model_key, model_path="checkpoints"):
 
 if __name__ == "__main__":
 #    download_model_gdown("screenclassification", "screenclassification-resnet-noisystudent+web350k.ckpt")
-#    download_enrico()
+    download_enrico()
 #    download_dataset_gdown("webui-7k")
-    download_metadata_gdown("screenclassification")
+#    download_metadata_gdown("screenclassification")
