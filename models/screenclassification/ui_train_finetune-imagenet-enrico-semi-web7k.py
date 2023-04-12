@@ -29,11 +29,6 @@ if __name__ == "__main__":
 
     model = UIScreenClassifier(num_classes=20, lr=0.00005, arch="resnet50_conv", dropout=0.5)
 
-    # model_pretrained = models.efficientnet_v2_m(weights=torchvision.models.EfficientNet_V2_M_Weights.DEFAULT)
-    # replace_default_bn_with_in(model_pretrained)
-    # model.model = model_pretrained
-    # model.model.classifier[-1] = nn.Linear(model.model.classifier[-1].in_features, model.hparams.num_classes)
-
     model_pretrained = models.resnet50(pretrained=True)
     replace_default_bn_with_custom(model_pretrained, dropout=model.hparams.dropout_block)
     replace_res_blocks_with_stochastic(model_pretrained, model.hparams.stochastic_depth_p)

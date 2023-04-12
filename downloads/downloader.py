@@ -139,7 +139,7 @@ def download_dataset_gdown(dataset_key, tmp_path="tmp", dataset_path="ds"):
     dataset_ids = glob.glob(extract_path + "/*/*")
 
     for folder in dataset_ids:
-        if not os.path.exists(os.path.join(dataset_path, os.path.basename(folder)):
+        if not os.path.exists(os.path.join(dataset_path, os.path.basename(folder))):
             os.rename(folder, os.path.join(dataset_path, os.path.basename(folder)))
     
     # delete the tmp path
