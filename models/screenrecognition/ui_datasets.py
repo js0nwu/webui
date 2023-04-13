@@ -34,7 +34,7 @@ def makeMultiHotVec(idxs, num_classes):
     return vec
 
 class VINSUIDataset(torch.utils.data.Dataset):
-    def __init__(self, root="/VINS Dataset/All Dataset", class_dict_path = "class_map_vins_manual.json", id_list_path = "train_ids_vins.json"):
+    def __init__(self, root="../../downloads/vins/All Dataset", class_dict_path = "../../metadata/screenrecognition/class_map_vins_manual.json", id_list_path = "../../metadata/screenrecognition/train_ids_vins.json"):
 
         if 'SM_CHANNEL_TRAINING' in os.environ:
             if os.path.exists(os.environ['SM_CHANNEL_TRAINING']+'/VINS Dataset.zip'):
@@ -585,13 +585,13 @@ class VINSUIDataModule(pl.LightningDataModule):
         self.num_workers = num_workers
 
         if one_hot_labels:
-            self.train_dataset = VINSUIOneHotLabelDataset(id_list_path="train_ids_vins.json")
-            self.val_dataset = VINSUIOneHotLabelDataset(id_list_path="val_ids_vins.json")
-            self.test_dataset = VINSUIOneHotLabelDataset(id_list_path="test_ids_vins.json")
+            self.train_dataset = VINSUIOneHotLabelDataset(id_list_path="../../metadata/screenrecognition/train_ids_vins.json")
+            self.val_dataset = VINSUIOneHotLabelDataset(id_list_path="../../metadata/screenrecognition/val_ids_vins.json")
+            self.test_dataset = VINSUIOneHotLabelDataset(id_list_path="../../metadata/screenrecognition/test_ids_vins.json")
         else:
-            self.train_dataset = VINSUIDataset(id_list_path="train_ids_vins.json")
-            self.val_dataset = VINSUIDataset(id_list_path="val_ids_vins.json")
-            self.test_dataset = VINSUIDataset(id_list_path="test_ids_vins.json")
+            self.train_dataset = VINSUIDataset(id_list_path="../../metadata/screenrecognition/train_ids_vins.json")
+            self.val_dataset = VINSUIDataset(id_list_path="../../metadata/screenrecognition/val_ids_vins.json")
+            self.test_dataset = VINSUIDataset(id_list_path="../../metadata/screenrecognition/test_ids_vins.json")
 
     def train_dataloader(self):
         return torch.utils.data.DataLoader(self.train_dataset, collate_fn=collate_fn, num_workers=self.num_workers, batch_size=self.batch_size, shuffle=True)

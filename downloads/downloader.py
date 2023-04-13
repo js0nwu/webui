@@ -26,6 +26,8 @@ DATASET_RICO_URL = "https://storage.googleapis.com/crowdstf-rico-uiuc-4540/rico_
 DATASET_ENRICO_URL = "http://userinterfaces.aalto.fi/enrico/resources/screenshots.zip"
 METADATA_ENRICO_URL = "https://raw.githubusercontent.com/luileito/enrico/master/design_topics.csv"
 
+DATASET_VINS_URL = "https://drive.google.com/file/d/1ucti2ujNJgKV-Ts_mXALA7BZ97iPv8h6/view"
+
 MODEL_GDRIVE_URLS = {
     "screenclassification": {
         "screenclassification-resnet-baseline.ckpt": "https://drive.google.com/file/d/1uBZMa5Z1lXiGGf5i4JHdhIck5gJjw22K/view?usp=share_link",
@@ -80,6 +82,20 @@ def download_rico(tmp_path="tmp", dataset_path="rico"):
     os.rename(os.path.join(extract_path, "combined"), os.path.join(dataset_path, "combined"))
     shutil.rmtree(tmp_path)
 
+def download_vins(tmp_path="tmp", dataset_path="vins"):
+    if not os.path.exists(tmp_path):
+        os.makedirs(tmp_path)
+
+    gdown.download(DATASET_VINS_URL, output=os.path.join(tmp_path, "VINS Dataset.zip"), fuzzy=True, use_cookies=False)
+
+    extract_path = os.path.join(tmp_path, "extract")
+    cmd = ['7z', 'x', os.path.join(tmp_path, "VINS Dataset.zip"), '-o' + str(extract_path)]
+    sp = subprocess.Popen(cmd)
+    sp.communicate()
+    os.rename(extract_path, dataset_path)
+    shutil.rmtree(tmp_path)
+   
+
 def download_enrico(tmp_path="tmp", dataset_path="enrico", screenclassification_metadata_path="../metadata/screenclassification"):
     if not os.path.exists(tmp_path):
         os.makedirs(tmp_path)
@@ -109,7 +125,7 @@ def download_metadata_gdown(metadata_key, metadata_path="../metadata"):
     if not os.path.exists(metadata_path):
         os.makedirs(metadata_path)
 
-    gdown.download_folder(METADATA_GDRIVE_URLS[metadata_key], output=os.path.join(metadata_path, metadata_key))
+    gdown.download_folder(METADATA_GDRIVE_URLS[metadata_key], output=os.path.join(metadata_path, metadata_key), use_cookies=False)
 
 
 def download_dataset_gdown(dataset_key, tmp_path="tmp", dataset_path="ds"):
@@ -117,7 +133,7 @@ def download_dataset_gdown(dataset_key, tmp_path="tmp", dataset_path="ds"):
         os.makedirs(tmp_path)
     
     if not os.path.exists(os.path.join(tmp_path, dataset_key)):
-        gdown.download_folder(DATASET_GDRIVE_URLS[dataset_key], output=os.path.join(tmp_path, dataset_key))
+        gdown.download_folder(DATASET_GDRIVE_URLS[dataset_key], output=os.path.join(tmp_path, dataset_key), use_cookies=False)
     
     extract_file = glob.glob(os.path.join(tmp_path, dataset_key) + "/*.zip.001")[0]
     split_json_file = glob.glob(os.path.join(tmp_path, dataset_key) + "/*.json")[0]
@@ -149,10 +165,13 @@ def download_model_gdown(model_name, model_key, model_path="checkpoints"):
     if not os.path.exists(model_path):
         os.makedirs(model_path)
 
-    gdown.download(MODEL_GDRIVE_URLS[model_name][model_key], output=os.path.join(model_path, model_key), fuzzy=True)
+    gdown.download(MODEL_GDRIVE_URLS[model_name][model_key], output=os.path.join(model_path, model_key), fuzzy=True, use_cookies=False)
 
 if __name__ == "__main__":
 #    download_model_gdown("screenclassification", "screenclassification-resnet-noisystudent+web350k.ckpt")
 #    download_enrico()
     download_dataset_gdown("webui-7k-balanced")
+    download_dataset_gdown("webui-7k")
 #    download_metadata_gdown("screenclassification")
+    download_vins()
+#    download_metadata_gdown("screenrecognition")

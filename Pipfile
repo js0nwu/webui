@@ -22,6 +22,8 @@ torchvision = {version = "*", index = "downloadpytorch"}
 pytorch-lightning = "==1.9"
 scikit-learn = "*"
 tensorboard = "*"
+xmltodict = "*"
+mean-average-precision = "*"
 
 [dev-packages]
 
