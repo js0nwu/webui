@@ -74,8 +74,12 @@ def download_rico(tmp_path="tmp", dataset_path="rico"):
 
     extract_path = os.path.join(tmp_path, "extract")
 
-    cmd = "7z x -tgzip -so {} | 7z x -si -ttar -o{}".format(output_path, extract_path)
-    sp = subprocess.Popen(cmd, stdin=subprocess.PIPE, shell=True)
+    cmd = ['7z', 'x', output_path, '-o' + tmp_path]
+    sp = subprocess.Popen(cmd)
+    sp.communicate()
+
+    cmd = ['7z', 'x', os.path.join(tmp_path, "unique_uis.tar.gz"), "-o" + extract_path]
+    sp = subprocess.Popen(cmd)
     sp.communicate()
 
     if not os.path.exists(dataset_path):
@@ -193,4 +197,5 @@ if __name__ == "__main__":
 #    download_dataset_gdown("webui-val")
 #    download_dataset_gdown("webui-test")
 #    download_model_gdown("screenrecognition", "screenrecognition-web7k.ckpt")
-    download_metadata_gdown("screensim")
+#    download_metadata_gdown("screensim")
+    download_rico()
