@@ -78,7 +78,7 @@ def download_rico(tmp_path="tmp", dataset_path="rico"):
     sp = subprocess.Popen(cmd)
     sp.communicate()
 
-    cmd = ['7z', 'x', os.path.join(tmp_path, "unique_uis.tar.gz"), "-o" + extract_path]
+    cmd = ['7z', 'x', os.path.join(tmp_path, "unique_uis.tar"), "-o" + extract_path]
     sp = subprocess.Popen(cmd)
     sp.communicate()
 
