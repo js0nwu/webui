@@ -28,6 +28,8 @@ METADATA_ENRICO_URL = "https://raw.githubusercontent.com/luileito/enrico/master/
 
 DATASET_VINS_URL = "https://drive.google.com/file/d/1ucti2ujNJgKV-Ts_mXALA7BZ97iPv8h6/view"
 
+DATASET_BOXES_URL = "https://drive.google.com/file/d/1FBbMaDmwipEXsKBODCaqrAn9X58Lwz83/view?usp=share_link"
+
 MODEL_GDRIVE_URLS = {
     "screenclassification": {
         "screenclassification-resnet-baseline.ckpt": "https://drive.google.com/file/d/1uBZMa5Z1lXiGGf5i4JHdhIck5gJjw22K/view?usp=share_link",
@@ -95,6 +97,18 @@ def download_vins(tmp_path="tmp", dataset_path="vins"):
     os.rename(extract_path, dataset_path)
     shutil.rmtree(tmp_path)
    
+def download_boxes_gdown(tmp_path="tmp", dataset_path="webui-boxes"):
+    if not os.path.exists(tmp_path):
+        os.makedirs(tmp_path)
+
+    gdown.download(DATASET_BOXES_URL, output=os.path.join(tmp_path, "all_boxes.zip"), fuzzy=True, use_cookies=False)
+
+    extract_path = os.path.join(tmp_path, "extract")
+    cmd = ['7z', 'x', os.path.join(tmp_path, "all_boxes.zip"), '-o' + str(extract_path)]
+    sp = subprocess.Popen(cmd)
+    sp.communicate()
+    os.rename(extract_path, dataset_path)
+    shutil.rmtree(tmp_path)
 
 def download_enrico(tmp_path="tmp", dataset_path="enrico", screenclassification_metadata_path="../metadata/screenclassification"):
     if not os.path.exists(tmp_path):
@@ -170,8 +184,9 @@ def download_model_gdown(model_name, model_key, model_path="checkpoints"):
 if __name__ == "__main__":
 #    download_model_gdown("screenclassification", "screenclassification-resnet-noisystudent+web350k.ckpt")
 #    download_enrico()
-    download_dataset_gdown("webui-7k-balanced")
-    download_dataset_gdown("webui-7k")
+#    download_dataset_gdown("webui-7k-balanced")
+#    download_dataset_gdown("webui-7k")
 #    download_metadata_gdown("screenclassification")
-    download_vins()
+#    download_vins()
 #    download_metadata_gdown("screenrecognition")
+    download_boxes_gdown()

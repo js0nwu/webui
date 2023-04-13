@@ -415,35 +415,16 @@ class WebUIPilotDataset(torch.utils.data.Dataset):
         
 # todo, maybe add more image transformations for data augmentation
 class WebUIDataset(torch.utils.data.Dataset):
-    # boxes_dir='/all_data'
-    # rawdata_screenshots_dir='/rawdata'
-    
-    def __init__(self, split_file, boxes_dir='all_data', rawdata_screenshots_dir='rawdata', class_map_file="class_map.json", min_area=100, device_scale=DEVICE_SCALE, max_boxes=100, max_skip_boxes=100):
+    def __init__(self, split_file, boxes_dir='../../downloads/webui-boxes/all_data', rawdata_screenshots_dir='../../downloads/ds', class_map_file="../../metadata/screenrecognition/class_map.json", min_area=100, device_scale=DEVICE_SCALE, max_boxes=100, max_skip_boxes=100):
         super(WebUIDataset, self).__init__()
         self.max_boxes = max_boxes
         self.max_skip_boxes = max_skip_boxes
-        mount_prefix = os.environ['SM_CHANNEL_TRAINING'] if 'SM_CHANNEL_TRAINING' in os.environ else "/"
-        
-        if 'SM_CHANNEL_TRAINING' in os.environ:
-            if not os.path.exists(os.path.join(mount_prefix, rawdata_screenshots_dir)):
-                with zipfile.ZipFile(os.environ['SM_CHANNEL_TRAINING']+'/rawdata.zip', 'r') as zip_ref:
-                    zip_ref.extractall(mount_prefix + '/')
-                os.remove(os.environ['SM_CHANNEL_TRAINING'] + "/rawdata.zip")
-                
-            if not os.path.exists(os.path.join(mount_prefix, boxes_dir)):
-                with zipfile.ZipFile(os.environ['SM_CHANNEL_TRAINING']+'/all_data.zip', 'r') as zip_ref:
-                    zip_ref.extractall(mount_prefix + '/')
-                      
-                os.remove(os.environ['SM_CHANNEL_TRAINING'] + "/all_data.zip")
-        
         self.keys = []
-        
         
         with open(split_file, "r") as f:
             boxes_split = json.load(f)
         
-        boxes_dir = os.path.join(mount_prefix, boxes_dir)
-        rawdata_directory = os.path.join(mount_prefix,rawdata_screenshots_dir)
+        rawdata_directory = rawdata_screenshots_dir
         for folder in [f for f in os.listdir(boxes_dir) if f in boxes_split]:
             for file in os.listdir(os.path.join(boxes_dir,folder)):
                 if os.path.exists(os.path.join(rawdata_directory, folder, file.replace('.json','-screenshot.webp'))):
@@ -633,19 +614,13 @@ def collate_fn(batch):
     return tuple(zip(*batch))
 
 class WebUIDataModule(pl.LightningDataModule):
-    def __init__(self, train_split_file, val_split_file="val_split_webui.json", test_split_file="test_split_webui.json", batch_size=8, num_workers=4):
+    def __init__(self, train_split_file, val_split_file="../../metadata/screenrecognition/val_split_webui.json", test_split_file="../../metadata/screenrecognition/test_split_webui.json", batch_size=8, num_workers=4):
         super(WebUIDataModule, self).__init__()
         self.batch_size = batch_size
         self.num_workers = num_workers
-        
-        
         self.train_dataset = WebUIDataset(split_file = train_split_file)
         self.val_dataset = WebUIDataset(split_file = val_split_file)
         self.test_dataset = WebUIDataset(split_file = test_split_file)
-
-        # self.train_dataset = WebUIDataset(split_file="/notebooks/webuimodels/train_split_webuimini.json")
-        # self.val_dataset = WebUIDataset(split_file="/notebooks/webuimodels/val_split_webuimini.json")
-        # self.test_dataset = WebUIDataset(split_file="/notebooks/webuimodels/test_split_webuimini.json")
 
     def train_dataloader(self):
         return torch.utils.data.DataLoader(self.train_dataset, collate_fn=collate_fn, num_workers=self.num_workers, batch_size=self.batch_size, shuffle=True)
