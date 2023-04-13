@@ -1,8 +1,8 @@
 if __name__ == "__main__":
 
-    ARTIFACT_DIR = "./checkpoints_screenrecognition_web350k"
+    ARTIFACT_DIR = "./checkpoints_screenrecognition_web7kbal"
 
-    CHECK_INTERVAL_STEPS = 4000
+    CHECK_INTERVAL_STEPS = 2000
 
     import os
 
@@ -18,7 +18,7 @@ if __name__ == "__main__":
     from pytorch_lightning.loggers import TensorBoardLogger
     logger = TensorBoardLogger(ARTIFACT_DIR)
     
-    data = WebUIDataModule(train_split_file = '../../downloads/train_split_web350k.json')
+    data = WebUIDataModule(train_split_file = '../../downloads/balanced_7k.json')
     
     model = UIElementDetector(num_classes=32)
     
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     print("***********************************")
     
     
-    checkpoint_callback = ModelCheckpoint(dirpath=ARTIFACT_DIR, filename= "screenrecognition",every_n_train_steps=CHECK_INTERVAL_STEPS, save_last=True)
+    checkpoint_callback = ModelCheckpoint(dirpath=ARTIFACT_DIR, every_n_train_steps=CHECK_INTERVAL_STEPS, save_last=True)
     checkpoint_callback2 = ModelCheckpoint(dirpath=ARTIFACT_DIR, filename= "screenrecognition",monitor='mAP', mode="max", save_top_k=1)
     
     earlystopping_callback = EarlyStopping(monitor="mAP", mode="max", patience=10)

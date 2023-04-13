@@ -36,13 +36,6 @@ def makeMultiHotVec(idxs, num_classes):
 class VINSUIDataset(torch.utils.data.Dataset):
     def __init__(self, root="../../downloads/vins/All Dataset", class_dict_path = "../../metadata/screenrecognition/class_map_vins_manual.json", id_list_path = "../../metadata/screenrecognition/train_ids_vins.json"):
 
-        if 'SM_CHANNEL_TRAINING' in os.environ:
-            if os.path.exists(os.environ['SM_CHANNEL_TRAINING']+'/VINS Dataset.zip'):
-                with zipfile.ZipFile(os.environ['SM_CHANNEL_TRAINING']+'/VINS Dataset.zip', 'r') as zip_ref:
-                    zip_ref.extractall('/')
-
-                os.remove(os.environ['SM_CHANNEL_TRAINING'] + "/VINS Dataset.zip")
-
         with open(id_list_path, "r") as f:
             self.id_list = json.load(f)
 
@@ -614,7 +607,7 @@ def collate_fn(batch):
     return tuple(zip(*batch))
 
 class WebUIDataModule(pl.LightningDataModule):
-    def __init__(self, train_split_file, val_split_file="../../metadata/screenrecognition/val_split_webui.json", test_split_file="../../metadata/screenrecognition/test_split_webui.json", batch_size=8, num_workers=4):
+    def __init__(self, train_split_file, val_split_file="../../downloads/val_split_webui.json", test_split_file="../../downloads/test_split_webui.json", batch_size=8, num_workers=4):
         super(WebUIDataModule, self).__init__()
         self.batch_size = batch_size
         self.num_workers = num_workers

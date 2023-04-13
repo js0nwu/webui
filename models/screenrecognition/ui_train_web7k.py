@@ -18,7 +18,7 @@ if __name__ == "__main__":
     from pytorch_lightning.loggers import TensorBoardLogger
     logger = TensorBoardLogger(ARTIFACT_DIR)
     
-    data = WebUIDataModule(train_split_file = '../../metadata/screenrecognition/train_split_web7k.json')
+    data = WebUIDataModule(train_split_file = '../../downloads/train_split_web7k.json')
     
     model = UIElementDetector(num_classes=32)
     
