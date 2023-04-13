@@ -1,8 +1,8 @@
 if __name__ == "__main__":
 
-    ARTIFACT_DIR = "./checkpoints_screenrecognition_web7k-weighted-vins"
-
     CHECK_INTERVAL_STEPS = 4000
+
+    ARTIFACT_DIR = "./checkpoints_screenrecognition_web7k-vins"
 
     import os
 
@@ -20,7 +20,7 @@ if __name__ == "__main__":
     
     data = VINSUIDataModule()
 
-    model = UIElementDetector.load_from_checkpoint('sr7k.ckpt', val_weights=None, lr=0.01)
+    model = UIElementDetector.load_from_checkpoint('../../downloads/checkpoints/screenrecognition-web7k.ckpt', val_weights=None, lr=0.01)
     model.hparams.num_classes = 13
 
     FINETUNE_CLASSES = 13
@@ -29,15 +29,11 @@ if __name__ == "__main__":
     model.model.head.classification_head.num_classes = FINETUNE_CLASSES
     model.hparams.num_classes = FINETUNE_CLASSES
     
-    # for clay
-    # model = UIElementDetector(num_classes=24)
-    # model = UIElementDetector.load_from_checkpoint("checkpoint41.ckpt")
     print("***********************************")
     print("checkpoints: " + str(os.listdir(ARTIFACT_DIR)))
     print("***********************************")
     
     
-    #checkpoint_s3_bucket="s3://sagemaker-screenrec/checkpoints"
     checkpoint_callback = ModelCheckpoint(dirpath=ARTIFACT_DIR, every_n_train_steps=CHECK_INTERVAL_STEPS, save_last=True)
     checkpoint_callback2 = ModelCheckpoint(dirpath=ARTIFACT_DIR, filename= "screenrecognition",monitor='mAP', mode="max", save_top_k=1)
     
@@ -45,11 +41,9 @@ if __name__ == "__main__":
 
     trainer = Trainer(
         gpus=1,
-        # precision=16,
         gradient_clip_val=1.0,
         accumulate_grad_batches=2,
         callbacks=[checkpoint_callback, checkpoint_callback2, earlystopping_callback],
-        #val_check_interval=CHECK_INTERVAL_STEPS,
         min_epochs=10,
         logger=logger
     )

@@ -1,8 +1,8 @@
 if __name__ == "__main__":
 
-    ARTIFACT_DIR = "./checkpoints_screenrecognition_web350k-vins"
-
     CHECK_INTERVAL_STEPS = 4000
+
+    ARTIFACT_DIR = "./checkpoints_screenrecognition_web7kbal-vins"
 
     import os
 
@@ -19,7 +19,8 @@ if __name__ == "__main__":
     logger = TensorBoardLogger(ARTIFACT_DIR)
     
     data = VINSUIDataModule()
-    model = UIElementDetector.load_from_checkpoint('../../downloads/checkpoints/screenrecognition-web350k.ckpt', val_weights=None, lr=0.01) # use best checkpoint
+
+    model = UIElementDetector.load_from_checkpoint('../../downloads/checkpoints/screenrecognition-web7kbal.ckpt', val_weights=None, lr=0.01)
     model.hparams.num_classes = 13
 
     FINETUNE_CLASSES = 13
@@ -31,6 +32,7 @@ if __name__ == "__main__":
     print("***********************************")
     print("checkpoints: " + str(os.listdir(ARTIFACT_DIR)))
     print("***********************************")
+    
     
     checkpoint_callback = ModelCheckpoint(dirpath=ARTIFACT_DIR, every_n_train_steps=CHECK_INTERVAL_STEPS, save_last=True)
     checkpoint_callback2 = ModelCheckpoint(dirpath=ARTIFACT_DIR, filename= "screenrecognition",monitor='mAP', mode="max", save_top_k=1)
