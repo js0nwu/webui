@@ -24,6 +24,7 @@ scikit-learn = "*"
 tensorboard = "*"
 xmltodict = "*"
 mean-average-precision = "*"
+pytorch-revgrad = "*"
 
 [dev-packages]
 

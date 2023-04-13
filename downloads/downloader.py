@@ -192,4 +192,5 @@ if __name__ == "__main__":
 #    download_boxes_gdown()
 #    download_dataset_gdown("webui-val")
 #    download_dataset_gdown("webui-test")
-    download_model_gdown("screenrecognition", "screenrecognition-web7k.ckpt")
+#    download_model_gdown("screenrecognition", "screenrecognition-web7k.ckpt")
+    download_metadata_gdown("screensim")
