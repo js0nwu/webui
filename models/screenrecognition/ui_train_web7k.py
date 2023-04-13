@@ -1,6 +1,6 @@
 if __name__ == "__main__":
 
-    ARTIFACT_DIR = "/checkpoints_screenrecognition_web7k-weighted"
+    ARTIFACT_DIR = "./checkpoints_screenrecognition_web7k"
 
     CHECK_INTERVAL_STEPS = 2000
 
