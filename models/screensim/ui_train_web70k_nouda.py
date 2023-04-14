@@ -21,7 +21,7 @@ if __name__ == "__main__":
     
     logger = TensorBoardLogger(ARTIFACT_DIR)
     
-    data = WebUISimilarityDataModule(split_file="../screenrecognition/train_split_web70k.json")
+    data = WebUISimilarityDataModule(split_file="../../downloads/train_split_web70k.json")
 
     model = UIScreenEmbedder(lambda_dann=0)
 

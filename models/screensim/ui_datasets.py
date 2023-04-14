@@ -30,7 +30,7 @@ def random_viewport_pair_from_full(img_full, height_ratio):
     return (view1, view2)
 
 class WebUISimilarityDataset(torch.utils.data.IterableDataset):
-    def __init__(self, split_file="../../downloads/train_split_web350k.json", root_dir="../../downloads/ds", domain_map_file="../../metadata/screensim/domain_map.json", duplicate_map_file="../../metadata/screensim/duplicate_map.json", device_name="iPhone-13 Pro", scroll_height_ratio=2.164, img_size=(256, 128), uda_dir="/home/paperspace/combined", uda_ignore_id_files=["../../metadata/screenclassification/filtered_train_ids.json", "../../metadata/screenclassification/filtered_val_ids.json", "../../metadata/screenclassification/filtered_test_ids.json"]):
+    def __init__(self, split_file="../../downloads/train_split_web350k.json", root_dir="../../downloads/ds", domain_map_file="../../metadata/screensim/domain_map.json", duplicate_map_file="../../metadata/screensim/duplicate_map.json", device_name="iPhone-13 Pro", scroll_height_ratio=2.164, img_size=(256, 128), uda_dir="../../downloads/rico/combined", uda_ignore_id_files=["../../metadata/screenclassification/filtered_train_ids.json", "../../metadata/screenclassification/filtered_val_ids.json", "../../metadata/screenclassification/filtered_test_ids.json"]):
         super(WebUISimilarityDataset, self).__init__()
         
         self.root_dir = root_dir
@@ -152,15 +152,15 @@ class WebUISimilarityDataset(torch.utils.data.IterableDataset):
             
 
 class WebUISimilarityDataModule(pl.LightningDataModule):
-    def __init__(self, batch_size=16, num_workers=4, split_file="../screenrecognition/train_split_web350k.json", root_dir="/home/paperspace/webuimodels/webuidata/dh2", domain_map_file="domain_map.json", duplicate_map_file="duplicate_map.json", device_name="iPhone-13 Pro", scroll_height_ratio=2.164, img_size=128):
+    def __init__(self, batch_size=16, num_workers=4, split_file="../../downloads/train_split_web350k.json", root_dir="../../downloads/ds", domain_map_file="../../metadata/screensim/domain_map.json", duplicate_map_file="../../metadata/screensim/duplicate_map.json", device_name="iPhone-13 Pro", scroll_height_ratio=2.164, img_size=128):
         super(WebUISimilarityDataModule, self).__init__()
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.split_file = split_file
         
         self.train_dataset = WebUISimilarityDataset(split_file=split_file)
-        self.val_dataset = WebUISimilarityDataset(split_file="../screenrecognition/val_split_webui.json")
-        self.test_dataset = WebUISimilarityDataset(split_file="../screenrecognition/test_split_webui.json")
+        self.val_dataset = WebUISimilarityDataset(split_file="../../downloads/val_split_webui.json")
+        self.test_dataset = WebUISimilarityDataset(split_file="../../downloads/test_split_webui.json")
         
     def train_dataloader(self):
         return torch.utils.data.DataLoader(self.train_dataset, num_workers=self.num_workers, batch_size=self.batch_size)

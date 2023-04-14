@@ -21,7 +21,7 @@ if __name__ == "__main__":
     
     logger = TensorBoardLogger(ARTIFACT_DIR)
     
-    data = WebUISimilarityDataModule(split_file="../webuidata/balanced_7k.json")
+    data = WebUISimilarityDataModule(split_file="../../downloads/balanced_7k.json")
 
     model = UIScreenEmbedder(lambda_dann=0)
 
