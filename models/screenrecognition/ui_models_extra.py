@@ -58,29 +58,25 @@ class FCOSMultiHead(FCOSHead):
 
         # regression loss: GIoU loss
         # TODO: vectorize this instead of using a for loop
-        # print("z", bbox_ctrness)
-        # print("a", bbox_regression)
-        # print("b", anchors)
-        pred_boxes = [
-            self.box_coder.decode_single(bbox_regression_per_image, anchors_per_image)
-            for anchors_per_image, bbox_regression_per_image in zip(anchors, bbox_regression)
-        ]
+#        pred_boxes = [
+#            self.box_coder.decode_single(bbox_regression_per_image, anchors_per_image)
+#            for anchors_per_image, bbox_regression_per_image in zip(anchors, bbox_regression)
+#        ]
+        pred_boxes = self.box_coder.decode(bbox_regression, torch.stack(anchors))
         
         # amp issue: pred_boxes need to convert float
-        # loss_bbox_reg = generalized_box_iou_loss(
-        #     torch.stack(pred_boxes)[foregroud_mask].float(),
-        #     torch.stack(all_gt_boxes_targets)[foregroud_mask],
-        #     reduction="sum",
-        # )
         
-        loss_bbox_reg = F.mse_loss(torch.stack(pred_boxes)[foregroud_mask].float(), torch.stack(all_gt_boxes_targets)[foregroud_mask], reduction="mean")
+        loss_bbox_reg = F.mse_loss(pred_boxes[foregroud_mask].float(), torch.stack(all_gt_boxes_targets)[foregroud_mask], reduction="mean")
 
         # ctrness loss
-        bbox_reg_targets = [
-            self.box_coder.encode_single(anchors_per_image, boxes_targets_per_image)
-            for anchors_per_image, boxes_targets_per_image in zip(anchors, all_gt_boxes_targets)
-        ]
-        bbox_reg_targets = torch.stack(bbox_reg_targets, dim=0)
+#        bbox_reg_targets = [
+#            self.box_coder.encode_single(anchors_per_image, boxes_targets_per_image)
+#            for anchors_per_image, boxes_targets_per_image in zip(anchors, all_gt_boxes_targets)
+#        ]
+#        bbox_reg_targets = torch.stack(bbox_reg_targets, dim=0)
+
+        bbox_reg_targets = self.box_coder.encode(torch.stack(anchors), torch.stack(all_gt_boxes_targets))
+        
         if len(bbox_reg_targets) == 0:
             gt_ctrness_targets = bbox_reg_targets.new_zeros(bbox_reg_targets.size()[:-1])
         else:
