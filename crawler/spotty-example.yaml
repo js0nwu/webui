@@ -1,0 +1,37 @@
+project:
+  name: webuicrawler
+  syncFilters:
+    - exclude:
+        - node_modules/*
+        - .git/*
+        - '*/__pycache__/*'
+        - 'crawls/*'
+        - 'clone_*'
+
+containers:
+  - projectDir: /app
+    file: Dockerfile.worker
+    env:
+      S3_ENDPOINT: xxxxxxxxx
+      SERVER_URL: xxxxxxxxx
+      AWS_ACCESS_KEY_ID: xxxxxxxxx
+      AWS_SECRET_ACCESS_KEY: xxxxxxxxx
+
+instances:
+  - name: instancename
+    provider: aws
+    parameters:
+      region: us-west-1
+      spotInstance: true
+      amiId: ami-0027813150885b745
+      rootVolumeSize: 10
+      instanceType: t3a.micro
+
+scripts:
+  setup: |
+    npm install
+  run: |
+    node process.js
+  all: |
+    npm install
+    node process.js

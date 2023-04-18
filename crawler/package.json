@@ -1,0 +1,14 @@
+{
+  "type": "module",
+  "dependencies": {
+    "aws-sdk": "^2.1148.0",
+    "axios": "^0.26.1",
+    "body-parser": "^1.20.0",
+    "edit-distance": "^1.0.5",
+    "express": "^4.17.3",
+    "fuzzyset": "^1.0.7",
+    "normalize-url": "^7.0.3",
+    "puppeteer": "^13.6.0",
+    "string-similarity": "^4.0.4"
+  }
+}
