@@ -32,3 +32,15 @@ Example inference code is found in the `notebooks/` directory. To train, check o
 * Please see the COPYRIGHT.txt file for information about the data contained within this repository.
 * Not all data samples have the same number of files (e.g., same number of device screenshots) due to the fact that the crawler used a timeout during collection
 * The [dataset released on HuggingFace](https://huggingface.co/datasets?search=biglab/webui) was filtered using a [list of explicit words](https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words) and therefore contains fewer samples than the experiments originally used in the paper.
+
+## Citation
+
+`
+@inproceedings{wu2023webui,
+  title={WebUI: A Dataset for Enhancing Visual UI Understanding with Web Semantics},
+  author={Wu, Jason and Wang, Siyan and Shen, Siman and Peng, Yi-Hao and Nichols, Jeffrey and Bigham, Jeffrey P},
+  booktitle={Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems},
+  pages={1--14},
+  year={2023}
+}
+`
