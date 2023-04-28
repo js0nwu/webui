@@ -19,6 +19,13 @@ Information about each directory:
 * `sample/` - a sample data point from the WebUI dataset
 * `scripts/` - data processing, dataset generation, and model export scripts
 
+## Getting Started
+
+
+![Image](https://user-images.githubusercontent.com/1429346/235152859-518c3e1e-a660-4da4-93c1-a4c25f63155c.mp4)
+
+
+
 ## Important Notes
 
 * Please see the COPYRIGHT.txt file for information about the data contained within this repository.
