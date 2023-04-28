@@ -1,6 +1,6 @@
 # webui
 
-https://user-images.githubusercontent.com/1429346/235152859-518c3e1e-a660-4da4-93c1-a4c25f63155c.mp4
+<img width="600" alt="webui_slide" src="https://user-images.githubusercontent.com/1429346/235155916-757835cf-735b-4cf6-a30b-b20f3271281e.png">
 
 Project homepage: [https://uimodeling.github.io/](https://uimodeling.github.io/)
 
