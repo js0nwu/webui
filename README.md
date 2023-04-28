@@ -12,12 +12,12 @@ The WebUI dataset contains 400K web UIs captured over a period of 3 months and c
 
 ## Repository Structure
 Information about each directory:
-* crawler/  - contains code for the crawler used to collect the WebUI dataset
-* downloads/ - contains scripts to download datasets and pre-trained models
-* models/ - contains scripts for training and reproducing the experiments in the paper
-* notebooks/ - contains example notebooks for running the models
-* sample/ - a sample data point from the WebUI dataset
-* scripts/ - data processing, dataset generation, and model export scripts
+* `crawler/`  - contains code for the crawler used to collect the WebUI dataset
+* `downloads/` - contains scripts to download datasets and pre-trained models
+* `models/` - contains scripts for training and reproducing the experiments in the paper
+* `notebooks/` - contains example notebooks for running the models
+* `sample/` - a sample data point from the WebUI dataset
+* `scripts/` - data processing, dataset generation, and model export scripts
 
 ## Important Notes
 
