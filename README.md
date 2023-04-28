@@ -35,7 +35,7 @@ Example inference code is found in the `notebooks/` directory. To train, check o
 
 ## Citation
 
-`
+```
 @inproceedings{wu2023webui,
   title={WebUI: A Dataset for Enhancing Visual UI Understanding with Web Semantics},
   author={Wu, Jason and Wang, Siyan and Shen, Siman and Peng, Yi-Hao and Nichols, Jeffrey and Bigham, Jeffrey P},
@@ -43,4 +43,4 @@ Example inference code is found in the `notebooks/` directory. To train, check o
   pages={1--14},
   year={2023}
 }
-`
+```
