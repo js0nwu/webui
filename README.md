@@ -17,3 +17,8 @@ Information about each directory:
 * notebooks/ - contains example notebooks for running the models
 * sample/ - a sample data point from the WebUI dataset
 * scripts/ - data processing, dataset generation, and model export scripts
+
+
+Important notes -
+* Not all data samples have the same number of files (e.g., same number of device screenshots) due to the fact that the crawler used a timeout during collection
+* The [dataset released on HuggingFace](https://huggingface.co/datasets?search=biglab/webui) was filtered using a [list of explicit words](https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words)
