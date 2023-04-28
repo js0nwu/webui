@@ -23,9 +23,8 @@ Information about each directory:
 
 ## Getting Started
 
-
-
-
+First, install dependencies with `pipenv install` and activate a virtual environment with `pipenv shell`
+Example inference code is found in the `notebooks/` directory. To train, check out the `models/` directory. Alternatively, check out [web demos](https://huggingface.co/spaces?sort=modified&search=biglab%2Fwebui) of the models (no installation required).
 
 
 ## Important Notes
