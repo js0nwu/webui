@@ -1,5 +1,7 @@
 # webui
 
+https://user-images.githubusercontent.com/1429346/235152859-518c3e1e-a660-4da4-93c1-a4c25f63155c.mp4
+
 Project homepage: [https://uimodeling.github.io/](https://uimodeling.github.io/)
 
 This repository contains the code and download scripts for the following papers:
@@ -22,7 +24,7 @@ Information about each directory:
 ## Getting Started
 
 
-![Image](https://user-images.githubusercontent.com/1429346/235152859-518c3e1e-a660-4da4-93c1-a4c25f63155c.mp4)
+
 
 
 
