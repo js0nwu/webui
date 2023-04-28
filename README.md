@@ -1,4 +1,4 @@
-# webui
+# WebUI: A Dataset for Enhancing Visual UI Understanding with Web Semantics
 
 <img width="600" alt="webui_slide" src="https://user-images.githubusercontent.com/1429346/235155916-757835cf-735b-4cf6-a30b-b20f3271281e.png">
 
